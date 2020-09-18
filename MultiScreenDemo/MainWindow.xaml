@@ -1,0 +1,75 @@
+﻿<Window x:Class="NetEti.DemoApplications.MultiScreenDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+        Title="MainWindow" Height="466" Width="540" LocationChanged="Window_LocationChanged" ContentRendered="Window_ContentRendered">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" MinHeight="122" />
+        </Grid.RowDefinitions>
+        <ListView Name="lwScreens" Grid.Row="0" Margin="20,59,18,33" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsEnabled="True"
+                  ItemsSource="{Binding ScreenInfos}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel FlowDirection="LeftToRight" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Name="ItemBorder" BorderBrush="BurlyWood" BorderThickness="3" Background="Bisque" CornerRadius="6" Padding="5" Margin="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Name="DeviceName" Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding Name, StringFormat=Name:&#x09;&#x09;{0}}" Padding="5,0,5,0"/>
+                            <TextBlock Name="IsPrimary" Grid.Row="1" Grid.Column="0"
+                                       Text="{Binding IsPrimary, StringFormat=IsPrimary:&#x09;{0}}" Padding="5,0,5,0"/>
+                            <TextBlock Name="Bounds" Grid.Row="2" Grid.Column="0"
+                                       Text="{Binding Bounds, StringFormat=Bounds:&#x09;&#x09;{0}}" Padding="5,0,5,0"/>
+                            <TextBlock Name="WorkingArea" Grid.Row="3" Grid.Column="0"
+                                       Text="{Binding WorkingArea, StringFormat=WorkingArea:&#x09;{0}}" Padding="5,0,5,0"/>
+                        </Grid>
+                    </Border>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsActualScreen, diag:PresentationTraceSources.TraceLevel=High}" Value="True">
+                            <Setter TargetName="ItemBorder" Property="Background" Value="LightGoldenrodYellow" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="aktuelle Position" Grid.Column="0" Margin="20, 0, 20, 40">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Name="links" Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding Left, StringFormat=links:&#x09;{0}}" Padding="5,0,5,0"/>
+                    <TextBlock Name="oben" Grid.Row="1" Grid.Column="0"
+                                       Text="{Binding Top, StringFormat=oben:&#x09;{0}}" Padding="5,0,5,0"/>
+                    <TextBlock Name="Breite" Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding ActualWidth, StringFormat=Breite:&#x09;{0}}" Padding="5,0,5,0"/>
+                    <TextBlock Name="Hoehe" Grid.Row="1" Grid.Column="1"
+                                       Text="{Binding ActualHeight, StringFormat=Höhe:&#x09;{0}}" Padding="5,0,5,0"/>
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</Window>

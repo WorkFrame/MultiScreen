@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiScreenDemo", "MultiScreenDemo\MultiScreenDemo.csproj", "{EDE49B81-1C41-4FB9-9FAC-06EA59EEEB31}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiScreen", "MultiScreen\MultiScreen.csproj", "{DEEAA990-D731-4C62-9215-131A7A95DF02}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDE49B81-1C41-4FB9-9FAC-06EA59EEEB31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDE49B81-1C41-4FB9-9FAC-06EA59EEEB31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDE49B81-1C41-4FB9-9FAC-06EA59EEEB31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDE49B81-1C41-4FB9-9FAC-06EA59EEEB31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEEAA990-D731-4C62-9215-131A7A95DF02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEEAA990-D731-4C62-9215-131A7A95DF02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEEAA990-D731-4C62-9215-131A7A95DF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEEAA990-D731-4C62-9215-131A7A95DF02}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
