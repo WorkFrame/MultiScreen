@@ -1,4 +1,4 @@
-﻿<Application x:Class="MultiScreenDemo.App"
+﻿<Application x:Class="NetEti.DemoApplications.MultiScreenDemo.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">

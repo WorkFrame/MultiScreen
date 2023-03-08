@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Text;
 using System.Windows;
 using System.Windows.Forms;
@@ -25,7 +23,7 @@ namespace NetEti.MultiScreen
         /// <summary>
         /// Der (Device-)Name des Screens.
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Die äußere Begrenzung des Screens.

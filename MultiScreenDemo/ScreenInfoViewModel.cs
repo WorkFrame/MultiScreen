@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows;
 
-namespace NetEti.DemoApplications.MultiScreenDemo
+namespace NetEti.DemoApplications
 {
 	/// <summary>
 	/// ViewModel für eine ScreenInfo-Instanz..
@@ -22,14 +22,14 @@ namespace NetEti.DemoApplications.MultiScreenDemo
 		/// <summary>
 		/// Bindeglied zur UI - wird angesprungen, wenn sich Properties geändert haben.
 		/// </summary>
-		public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler? PropertyChanged;
 
 		#endregion INotifyPropertyChanged implementation
 
 		/// <summary>
 		/// Der (Device-)Name des Screens.
 		/// </summary>
-		public string Name
+		public string? Name
 		{
 			get
 			{
@@ -130,27 +130,27 @@ namespace NetEti.DemoApplications.MultiScreenDemo
 			this._screenInfo = screenInfo;
 		}
 
-    #endregion public members
+		#endregion public members
 
-    #region private members
+		#region private members
 
-    /// <summary>
-    /// Meldet für die UI, wenn sich eine Property geändert hat.
-    /// </summary>
-    /// <param name="e"></param>
-    protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
-    {
-      var handler = this.PropertyChanged;
-      if (handler != null)
-      {
-        handler(this, e);
-      }
-    }
+		/// <summary>
+		/// Meldet für die UI, wenn sich eine Property geändert hat.
+		/// </summary>
+		/// <param name="e"></param>
+		protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+		{
+			var handler = this.PropertyChanged;
+			if (handler != null)
+			{
+				handler(this, e);
+			}
+		}
 
-    private ScreenInfo _screenInfo;
-    private bool _isActualScreen;
+		private ScreenInfo _screenInfo;
+		private bool _isActualScreen;
 
-    #endregion private members
+		#endregion private members
 
-  }
+	}
 }
