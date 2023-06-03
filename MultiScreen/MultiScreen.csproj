@@ -13,8 +13,17 @@
     <Company>NetEti</Company>
     <Description>Assembly mit Unterstützung für die Skalierung bei mehreren Bildschirmen</Description>
     <Copyright>Copyright © $(Authors) 2015-2023</Copyright>
+    <PackageTags>NetEti Framework Multi Screen</PackageTags>
+    <AssemblyVersion>7.0.1.0</AssemblyVersion>
+    <FileVersion>7.0.1.0</FileVersion>
   </PropertyGroup>
 	<ItemGroup>
   	<FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
 	</ItemGroup>
+	
+  <PropertyGroup>
+    <AssemblyRoot>$(ProjectDir)../../../ReadyBin/Assemblies</AssemblyRoot>
+  </PropertyGroup>
+  <Import Project="$(ProjectDir)../../AddOn/proj/*" Condition="exists('$(ProjectDir)../../AddOn/proj')" />
+
 </Project>
