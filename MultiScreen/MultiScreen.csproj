@@ -14,8 +14,8 @@
     <Description>Assembly mit Unterstützung für die Skalierung bei mehreren Bildschirmen</Description>
     <Copyright>Copyright © $(Authors) 2015-2023</Copyright>
     <PackageTags>NetEti Framework Multi Screen</PackageTags>
-    <AssemblyVersion>7.0.1.0</AssemblyVersion>
-    <FileVersion>7.0.1.0</FileVersion>
+    <AssemblyVersion>7.0.1.1</AssemblyVersion>
+    <FileVersion>7.0.1.1</FileVersion>
   </PropertyGroup>
 	<ItemGroup>
   	<FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
