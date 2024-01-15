@@ -3,18 +3,20 @@ using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace NetEti.MultiScreen
 {
     /// <summary>
-    /// Mindest-Informationen über einen Screen.
+    /// Mindestinformationen über einen Screen.
     /// Thanks to Nils on StackOverflow http://stackoverflow.com/questions/1927540/how-to-get-the-size-of-the-current-screen-in-wpf.
     /// </summary>
     /// <remarks>
     /// File: ScreenInfo.cs
     /// Autor: Erik Nagel, NetEti
     ///
-    /// 31.08.2015 Erik Nagel: erstellt
+    /// 31.08.2015 Erik Nagel: erstellt.
+    /// 12.01.2024 Erik Nagel: GetMainWindowScreenInfo() implementiert.
     /// </remarks>
     public class ScreenInfo
     {
@@ -110,6 +112,25 @@ namespace NetEti.MultiScreen
         }
 
         /// <summary>
+        /// Liefert den übergebenen Punkt zurück, ändert aber, wenn erforderlich,
+        /// seine Koordinaten so ab, dass der Punkt sich inklusive Margins auf jeden
+        /// Fall innerhalb der für alle Bildschirme maximalen Koordinaten befindet.
+        /// </summary>
+        /// <param name="point">Punkt, der möglicherweise nicht innerhalb des aktuellen Bildschirms liegt.</param>
+        /// <param name="horizontalMargin">Horizontaler Mindestabstand zu den Bildschirmrändern.</param>
+        /// <param name="verticalMargin">Vertikaler Mindestabstand zu den Bildschirmrändern.</param>
+        /// <returns>Punkt, der inklusive margin auf jeden Fall innerhalb des aktuellen Bildschirms liegt.</returns>
+        public static System.Windows.Point ClipToAllScreens(
+          System.Windows.Point point, double horizontalMargin, double verticalMargin)
+        {
+            point.X = point.X > _allScreensMaxX - horizontalMargin ? _allScreensMaxX - horizontalMargin : point.X;
+            point.X = point.X < 0 ? 0 : point.X;
+            point.Y = point.Y > _allScreensMaxY - verticalMargin ? _allScreensMaxY - verticalMargin : point.Y;
+            point.Y = point.Y < 0 ? 0 : point.Y;
+            return point;
+        }
+
+        /// <summary>
         /// Liefert Eigenschaften des letzten aktuellen Bildschirms.
         /// </summary>
         /// <returns>Eigenschaften des letzten aktuellen Bildschirms</returns>
@@ -117,6 +138,16 @@ namespace NetEti.MultiScreen
         {
             int actualScreenIndex = _lastScreenIndex;
             return _allScreenInfos[actualScreenIndex];
+        }
+
+        /// <summary>
+        /// Liefert den Index des aktuellen Bildschirms in der Liste aller Bildschirme.
+        /// </summary>
+        /// <param name="window">Ein WPF-Window.</param>
+        /// <returns>Index des aktuellen Bildschirms in der Liste aller Bildschirme.</returns>
+        public static int GetActualScreenInfoIndex(Window window)
+        {
+            return setActualScreenDimensions(window);
         }
 
         /// <summary>
@@ -128,6 +159,26 @@ namespace NetEti.MultiScreen
         {
             int actualScreenIndex = setActualScreenDimensions(window);
             return _allScreenInfos[actualScreenIndex];
+        }
+
+        /// <summary>
+        /// Liefert threadsafe Position und Maße das MainWindow.
+        /// </summary>
+        /// <returns>Bildschirminformationen zum MainWindow.</returns>
+        public static ScreenInfo GetMainWindowScreenInfo()
+        {
+            return (ScreenInfo)System.Windows.Application.Current.Dispatcher.Invoke(
+                new Func<ScreenInfo>(ThreadAccessMainWindowScreenInfoOnGuiDispatcher), DispatcherPriority.Normal);
+        }
+
+        /// <summary>
+        /// Liefert threadsafe Position und Maße das MainWindow.
+        /// </summary>
+        /// <returns>Bildschirminformationen zum MainWindow.</returns>
+        private static ScreenInfo ThreadAccessMainWindowScreenInfoOnGuiDispatcher()
+        {
+            Window mainWindow = System.Windows.Application.Current.MainWindow;
+            return ScreenInfo.GetActualScreenInfo(mainWindow);
         }
 
         /// <summary>
@@ -152,19 +203,26 @@ namespace NetEti.MultiScreen
 
         private static List<ScreenInfo> _allScreenInfos = new List<ScreenInfo>();
         private static int _lastScreenIndex;
+        private static double _allScreensMaxX;
+        private static double _allScreensMaxY;
 
         static ScreenInfo()
         {
             _allScreenInfos = new List<ScreenInfo>();
             _lastScreenIndex = 0;
+            _allScreensMaxX = double.MinValue;
+            _allScreensMaxY = double.MinValue;
             for (int i = 0; i < Screen.AllScreens.Length; i++)
             {
+                Rect actBounds = ScreenInfo.getRect(Screen.AllScreens[i].Bounds);
+                _allScreensMaxX = _allScreensMaxX < actBounds.BottomRight.X ? actBounds.BottomRight.X : _allScreensMaxX;
+                _allScreensMaxY = _allScreensMaxY < actBounds.BottomRight.Y ? actBounds.BottomRight.Y : _allScreensMaxY;
                 _allScreenInfos.Add(
                   new ScreenInfo()
                   {
                       Name = Screen.AllScreens[i].DeviceName,
                       IsPrimary = Screen.AllScreens[i].Primary,
-                      Bounds = ScreenInfo.getRect(Screen.AllScreens[i].Bounds),
+                      Bounds = actBounds,
                       WorkingArea = ScreenInfo.getRect(Screen.AllScreens[i].WorkingArea)
                   });
             }

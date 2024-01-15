@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using NetEti.MultiScreen;
+using System.Windows;
 
 namespace NetEti.DemoApplications
 {
@@ -7,5 +8,6 @@ namespace NetEti.DemoApplications
     /// </summary>
     public partial class App : Application
     {
+        ScreenInfo mainWindowScreenInfo = ScreenInfo.GetMainWindowScreenInfo();
     }
 }

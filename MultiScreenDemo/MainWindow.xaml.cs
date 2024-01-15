@@ -70,6 +70,7 @@ namespace NetEti.DemoApplications
         {
             this.refreshScreenInfos();
             this.actualizeScreenInfos();
+            // TEST: ScreenInfo mainWindowScreenInfo = ScreenInfo.GetMainWindowScreenInfo();
         }
 
         private void actualizeScreenInfos()
