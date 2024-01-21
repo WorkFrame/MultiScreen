@@ -16,7 +16,7 @@ namespace NetEti.MultiScreen
     /// Autor: Erik Nagel, NetEti
     ///
     /// 31.08.2015 Erik Nagel: erstellt.
-    /// 12.01.2024 Erik Nagel: GetMainWindowScreenInfo() implementiert.
+    /// 17.01.2024 Erik Nagel: ClipToAllScreens, GetMainWindowScreenInfo und GetFirstScreenInfo implementiert.
     /// </remarks>
     public class ScreenInfo
     {
@@ -159,6 +159,15 @@ namespace NetEti.MultiScreen
         {
             int actualScreenIndex = setActualScreenDimensions(window);
             return _allScreenInfos[actualScreenIndex];
+        }
+
+        /// <summary>
+        /// Liefert Eigenschaften des ersten (Haupt-) Bildschirms.
+        /// </summary>
+        /// <returns>Eigenschaften des ersten (Haupt-) Bildschirms.</returns>
+        public static ScreenInfo GetFirstScreenInfo()
+        {
+            return _allScreenInfos[0];
         }
 
         /// <summary>
