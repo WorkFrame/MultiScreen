@@ -12,7 +12,7 @@
     <Authors>Nils Andresen, Erik Nagel</Authors>
     <Company>NetEti</Company>
     <Description>Assembly mit Unterstützung für die Skalierung bei mehreren Bildschirmen</Description>
-    <Copyright>Copyright © $(Authors) 2015-2023</Copyright>
+    <Copyright>Copyright © $(Authors) 2015-$([System.DateTime]::Now.Year)</Copyright>
     <PackageTags>NetEti Framework Multi Screen</PackageTags>
     <AssemblyVersion>8.1.0.0</AssemblyVersion>
     <FileVersion>8.1.0.0</FileVersion>
