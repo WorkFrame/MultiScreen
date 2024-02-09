@@ -17,7 +17,7 @@
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border Name="ItemBorder" BorderBrush="BurlyWood" BorderThickness="3" Background="Bisque" CornerRadius="6" Padding="5" Margin="5">
+                    <Border Name="ItemBorder" BorderBrush="BurlyWood" BorderThickness="3" Background="{StaticResource HatchBrush}" CornerRadius="6" Padding="5" Margin="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>

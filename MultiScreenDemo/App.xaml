@@ -3,6 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <DrawingBrush x:Key="HatchBrush" TileMode="Tile"
+              Viewport="0,0,10,10" ViewportUnits="Absolute"
+              Viewbox="0,0,30,30" ViewboxUnits="Absolute">
+                <DrawingBrush.Transform>
+                    <RotateTransform Angle="45"/>
+                </DrawingBrush.Transform>
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing Brush="BurlyWood">
+                        <GeometryDrawing.Geometry>
+                            <LineGeometry StartPoint="0,15" EndPoint="30,15"/>
+                        </GeometryDrawing.Geometry>
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="Black" Thickness="1.5"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
