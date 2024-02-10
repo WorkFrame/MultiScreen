@@ -145,7 +145,7 @@ namespace NetEti.MultiScreen
         /// </summary>
         /// <param name="window">Ein WPF-Window.</param>
         /// <returns>Index des aktuellen Bildschirms in der Liste aller Bildschirme.</returns>
-        public static int GetActualScreenInfoIndex(Window window)
+        public static int? GetActualScreenInfoIndex(Window window)
         {
             return setActualScreenDimensions(window);
         }
@@ -155,10 +155,14 @@ namespace NetEti.MultiScreen
         /// </summary>
         /// <param name="window">Ein WPF-Window.</param>
         /// <returns>Eigenschaften des aktuellen Bildschirms.</returns>
-        public static ScreenInfo GetActualScreenInfo(Window window)
+        public static ScreenInfo? GetActualScreenInfo(Window window)
         {
-            int actualScreenIndex = setActualScreenDimensions(window);
-            return _allScreenInfos[actualScreenIndex];
+            int? actualScreenIndex = setActualScreenDimensions(window);
+            if (actualScreenIndex == null)
+            {
+                return null;
+            }
+            return _allScreenInfos[(int)actualScreenIndex];
         }
 
         /// <summary>
@@ -171,20 +175,20 @@ namespace NetEti.MultiScreen
         }
 
         /// <summary>
-        /// Liefert threadsafe Position und Maße das MainWindow.
+        /// Liefert thread safe Position und Maße des MainWindow.
         /// </summary>
         /// <returns>Bildschirminformationen zum MainWindow.</returns>
-        public static ScreenInfo GetMainWindowScreenInfo()
+        public static ScreenInfo? GetMainWindowScreenInfo()
         {
-            return (ScreenInfo)System.Windows.Application.Current.Dispatcher.Invoke(
-                new Func<ScreenInfo>(ThreadAccessMainWindowScreenInfoOnGuiDispatcher), DispatcherPriority.Normal);
+            return (ScreenInfo?)System.Windows.Application.Current.Dispatcher.Invoke(
+                new Func<ScreenInfo?>(ThreadAccessMainWindowScreenInfoOnGuiDispatcher), DispatcherPriority.Normal);
         }
 
         /// <summary>
-        /// Liefert threadsafe Position und Maße das MainWindow.
+        /// Liefert thread safe Position und Maße des MainWindow.
         /// </summary>
         /// <returns>Bildschirminformationen zum MainWindow.</returns>
-        private static ScreenInfo ThreadAccessMainWindowScreenInfoOnGuiDispatcher()
+        private static ScreenInfo? ThreadAccessMainWindowScreenInfoOnGuiDispatcher()
         {
             Window mainWindow = System.Windows.Application.Current.MainWindow;
             return ScreenInfo.GetActualScreenInfo(mainWindow);
@@ -245,11 +249,15 @@ namespace NetEti.MultiScreen
               });
         }
 
-        private static int setActualScreenDimensions(Window window)
+        private static int? setActualScreenDimensions(Window window)
         {
             int actualScreenIndex = getAktualScreenIndex(window);
-            PresentationSource MainWindowPresentationSource = PresentationSource.FromVisual(window);
-            Matrix m = MainWindowPresentationSource.CompositionTarget.TransformToDevice;
+            PresentationSource mainWindowPresentationSource = PresentationSource.FromVisual(window);
+            if (mainWindowPresentationSource == null)
+            {
+                return null;
+            }
+            Matrix m = mainWindowPresentationSource.CompositionTarget.TransformToDevice;
             double DpiWidthFactor = m.M11;
             double DpiHeightFactor = m.M22;
 
